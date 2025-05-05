@@ -31,5 +31,16 @@ def manage_members():
         return jsonify({'message': 'Member deleted'})
     return jsonify({'message': 'Method not allowed'}), 405
 
+@app.route('/api/tasks', methods=['GET', 'POST'])
+def manage_tasks():
+    global task_list
+    if request.method == 'GET':
+        return jsonify(task_list)
+    elif request.method == 'POST':
+        new_task = request.json
+        task_list.append(new_task)
+        return jsonify(new_task)
+    return jsonify({'message': 'Method not allowed'}), 405
+
 if __name__ == '__main__':
     app.run(debug=True)
